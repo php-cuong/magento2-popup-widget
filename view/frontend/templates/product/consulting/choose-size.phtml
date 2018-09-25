@@ -1,0 +1,62 @@
+<?php
+/**
+ * GiaPhuGroup Co., Ltd.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GiaPhuGroup.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.giaphugroup.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    PHPCuong
+ * @package     PHPCuong_PopupContent
+ * @copyright   Copyright (c) 2018-2019 GiaPhuGroup Co., Ltd. All rights reserved. (http://www.giaphugroup.com/)
+ * @license     https://www.giaphugroup.com/LICENSE.txt
+ */
+ /** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<style>
+    .size-selection {
+        margin: 15px 0px;
+    }
+    .consulting-content {
+        display: none;
+    }
+</style>
+<div class="size-selection">
+    <a href="#"><?php echo __('How to choose the right size?'); ?></a>
+</div>
+<div class="consulting-content" id="consulting-content">
+    <!-- The codes below helps display a static block in the template phtml file-->
+    <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('how-to-choose-the-right-size')->toHtml(); ?>
+    <!-- We will create the block id how-to-choose-the-right-size in the backend later -->
+</div>
+<!-- You can learn How to use the Modal widget in the link https://devdocs.magento.com/guides/v2.2/javascript-dev-guide/widgets/widget_modal.html -->
+<!-- The javascript codes below helps to display the popup content -->
+<script>
+    require([
+        'jquery',
+        'Magento_Ui/js/modal/modal'
+    ], function($, modal) {
+        // declaring initial options
+        var options = {
+            type: 'popup',
+            responsive: true,
+            innerScroll: true,
+            title: '<?php echo __('How to choose the right size'); ?>'
+        };
+        // Initialize the modal widget to the consulting content
+        var slide = modal(options, $('#consulting-content'));
+        // Whenever click on the text link How to choose the right size?
+        $('.size-selection a').on('click', function() {
+            // open the popup content
+            $('#consulting-content').modal('openModal');
+            return false;
+        });
+    });
+</script>
